@@ -1,0 +1,452 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom, #0f1427, #36478d);
+    min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+    height: 99px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.header-text {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 40px;
+    color: white;
+    padding: 24px 36px;
+    line-height: normal;
+}
+
+/* HERO */
+.hero-container {
+    margin: 21px 48px 0;
+}
+
+.hero-section {
+    background-image:
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+        url("images/heroimg.avif");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height: 491px;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 80px;
+}
+
+.hero-title {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 32px;
+    color: white;
+    line-height: normal;
+}
+
+
+.main-content {
+    background-color: white;
+    margin: 43px 48px 0;
+    border-radius: 10px 10px 0 0;
+    padding-bottom: 64px;
+}
+
+
+.section {
+    padding: 64px 128px 0;
+}
+
+.section-title {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 32px;
+    color: black;
+    margin-bottom: 32px;
+    line-height: normal;
+}
+
+.section-description {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 24px;
+    color: black;
+    line-height: normal;
+}
+
+/* CAROUSEL */
+.carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.carousel-btn {
+    position: absolute;
+    z-index: 10;
+    padding: 8px;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.carousel-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.carousel-btn-prev {
+    left: 0;
+}
+
+.carousel-btn-next {
+    right: 0;
+}
+
+.carousel-wrapper {
+    width: 100%;
+    max-width: 896px;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    width: 100%;
+    flex-shrink: 0;
+    padding: 0 16px;
+}
+
+/* Persona Card */
+.persona-card {
+    display: flex;
+    gap: 32px;
+    padding: 32px;
+    border-radius: 8px;
+}
+
+.persona-left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 310px;
+}
+
+.persona-image {
+    width: 210px;
+    height: 211px;
+    overflow: hidden;
+}
+
+.persona-image * {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.persona-info {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+}
+
+.persona-name {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 16px;
+}
+
+.persona-occupation {
+    font-size: 16px;
+    color: black;
+    margin-bottom: 16px;
+}
+
+.persona-brands {
+    font-size: 16px;
+    color: black;
+}
+
+.persona-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding-top: 16px;
+}
+
+.persona-section-title {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 20px;
+    color: black;
+    margin-bottom: 16px;
+}
+
+.persona-list {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: black;
+    list-style-type: disc;
+    padding-left: 24px;
+}
+
+.persona-list li {
+    margin-bottom: 8px;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #d1d5db;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.indicator.active {
+    background-color: #1f2937;
+}
+
+.style-board-image {
+    margin-bottom: 32px;
+}
+
+.style-board-image * {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.critical-path-list {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 24px;
+    color: black;
+    list-style-type: decimal;
+    padding-left: 36px;
+    margin-bottom: 32px;
+}
+
+.critical-path-list li {
+    margin-bottom: 8px;
+}
+
+.taskflow-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+}
+
+.taskflow-image * {
+    max-width: 732px;
+    height: auto;
+    object-fit: cover;
+}
+
+.figma-section {
+    padding: 48px 128px 0;
+    text-align: center;
+}
+
+.figma-link {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+    background-color: #1f2937;
+    padding: 16px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 32px;
+}
+
+.figma-link:hover {
+    background-color: #374151;
+    transform: translateY(-2px);
+}
+
+.figma-link:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .figma-section {
+        padding: 32px 24px 0;
+    }
+
+    .figma-link {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .section {
+        padding: 48px 64px 0;
+    }
+
+    .persona-card {
+        flex-direction: column;
+    }
+
+    .persona-left {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-container {
+        margin: 21px 24px 0;
+    }
+
+    .main-content {
+        margin: 43px 24px 0;
+    }
+
+    .section {
+        padding: 32px 24px 0;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .section-description {
+        font-size: 18px;
+    }
+
+    .hero-title {
+        font-size: 24px;
+    }
+
+    .carousel-btn {
+        display: none;
+    }
+
+    .carousel-slide {
+        padding: 0;
+    }
+
+    .header-text {
+        font-size: 28px;
+        padding: 20px 24px;
+    }
+
+    .hero-container {
+        margin: 21px 24px 0;
+    }
+
+    .hero-section {
+        height: 350px;
+        padding-bottom: 60px;
+    }
+
+    .hero-title {
+        font-size: 24px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .main-content {
+        margin: 43px 24px 0;
+    }
+
+    .section {
+        padding: 32px 24px 0;
+    }
+
+    .section-title {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+
+    .section-description {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .carousel-btn {
+        display: none;
+    }
+
+    .carousel-slide {
+        padding: 0;
+    }
+
+    .persona-card {
+        padding: 24px;
+    }
+
+    .persona-image {
+        width: 100%;
+        max-width: 210px;
+        margin: 0 auto;
+    }
+
+    .persona-info {
+        text-align: center;
+    }
+
+    .persona-name {
+        font-size: 18px;
+    }
+
+    .persona-occupation {
+        font-size: 14px;
+    }
+
+    .persona-brands {
+        font-size: 14px;
+    }
+
+    .persona-section-title {
+        font-size: 18px;
+    }
+
+    .persona-list {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .critical-path-list {
+        font-size: 18px;
+        padding-left: 24px;
+        line-height: 1.5;
+    }
+
+    .taskflow-image * {
+        max-width: 100%;
+    }
+}
+
