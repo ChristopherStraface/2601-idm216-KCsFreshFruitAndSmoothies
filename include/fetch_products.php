@@ -21,7 +21,7 @@
     }
 
     function product_existence($price) {
-        return $price ? "$" . number_format($price/100, 2) : "Unavailable";
+        return $price ? number_format($price/100, 2) : "Unavailable";
     }
 
     function price_list($one_size, $small, $medium, $large) {
@@ -42,9 +42,9 @@
     while ($row_products = $result_products->fetch_assoc()) {
         $product = [
             "id" => $row_products["id"],
-            "product_name" => $row_products["name"],
+            "name" => $row_products["name"],
 
-            "price" => price_list($row_products["one_size"], $row_products["small"], $row_products["medium"], $row_products["large"]),
+            "prices" => price_list($row_products["one_size"], $row_products["small"], $row_products["medium"], $row_products["large"]),
 
             "ingredients" => $row_products["ingredients"] ? $ingredients : "Unavailable",
             "add_ons" => $row_products["add_ons"] ? $add_ons : "Unavailable"
