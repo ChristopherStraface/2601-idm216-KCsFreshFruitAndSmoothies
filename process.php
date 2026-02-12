@@ -55,7 +55,7 @@
 
     // Calculate total.
     $subtotal = number_format($subtotal, 2);
-    $tax = number_format($subtotal * $tax_rate / 100, 2);
+    $tax = number_format($subtotal * $tax_rate, 2);
     $total = number_format($subtotal + $tax, 2);
 ?>
 
