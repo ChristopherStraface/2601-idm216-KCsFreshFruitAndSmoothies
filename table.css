@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+a, button {
+    cursor: pointer;
+}
+
 :root {
     font-family: 'Open Sans', sans-serif;
 }
@@ -24,7 +28,7 @@ form {
     display: none;
 }
 
-caption {
+caption, a {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
@@ -75,7 +79,6 @@ section {
 }
 
 button {
-    cursor: pointer;
     font-size: 1.5rem;
     font-weight: 550;
 }
