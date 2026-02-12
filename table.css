@@ -1,0 +1,84 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a, button {
+    cursor: pointer;
+}
+
+:root {
+    font-family: 'Open Sans', sans-serif;
+}
+
+html, body {
+    width: 100%;
+}
+
+body {
+    align-items: center;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+form {
+    display: none;
+}
+
+caption, a {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+th, td, button {
+    padding: 0.25rem 0.75rem;
+}
+
+th {
+    background-color: oklch(0.45 0.15 145);
+    color: oklab(0.99 0 0);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+tbody > tr:nth-child(odd) > td {
+    background-color: oklab(0.9 0 0);
+}
+
+tbody > tr:nth-child(even) > td {
+    background-color: oklab(0.8 0 0);
+}
+
+td {
+    font-size: 1.25rem;
+}
+
+td.unavailable, tr.total {
+    background-color: oklab(0.25 0 0) !important;
+    color: oklab(0.99 0 0) !important;
+}
+
+picture, picture * {
+    height: 7rem;
+}
+
+input {
+    --side: 1.75rem;
+    height: var(--side);
+    width: var(--side);
+}
+
+section {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+}
+
+button {
+    font-size: 1.5rem;
+    font-weight: 550;
+}
