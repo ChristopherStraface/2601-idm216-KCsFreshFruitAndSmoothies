@@ -2,18 +2,19 @@
     $form = [];
 
     foreach ($products as $product) {
-        $product_id = $product["id"];
-
-        $form_item = ["name" => $product["name"]];
+        $form_item = [
+            "id" => $product["id"],
+            "name" => $product["name"]
+        ];
 
         foreach ($product["prices"] as $key => $value) {
-            $type = $product_id . "_" . $key;
-
             if ($value !== "Unavailable") {
+                $form_item["size"] = $key;
                 $form_item["price"] = $value;
                 $form_item["count"] = 0;
 
-                $form[$type] = $form_item;
+                $product_code = $product["id"] . "-" . $key;
+                $form[$product_code] = $form_item;
             }
         }       
     }

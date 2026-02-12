@@ -2,12 +2,6 @@
     include("include/database.php");
     include("include/fetch_products.php");
 
-    function snake_case($string) {
-        $lower_case = strtolower($string);
-        $final_string = str_replace(" ", "_", $lower_case);
-        return $final_string;
-    }
-
     $page_title = "KC's - Main Menu Items";
 ?>
 
@@ -25,7 +19,11 @@
     <link rel="stylesheet" href="table.css">
 </head>
 <body>
-    <form id="order_process" method="POST" action="process.php"></form>
+    <form 
+        id="order_process" 
+        method="POST" 
+        action="process.php">
+    </form>
 
     <table>
         <caption><?= $page_title ?></caption>
@@ -39,47 +37,58 @@
                 <th>Large</th>
             </tr>
         </thead>
-        <tbody>
-            <?php 
-                foreach ($products as $product) {
-                    $product_id = $product["id"];
-            ?>
+        <tbody><?php 
+            foreach ($products as $product) { ?>
                 <tr>
-                    <td><?= $product_id ?></td>
+                    <td><?= $product["id"] ?></td>
                     <td><?= $product["name"] ?></td>
+                    
+                    <!-- Cell that contains the product image -->
+                    <td><picture>
+                        <source 
+                            srcset="images/<?= $product["image"] ?>" 
+                            type="image/avif"
+                        >
 
-                    <td>
-                        <picture>
-                            <source srcset="<?= "images/" . snake_case($product["name"]) . ".avif" ?>" type="image/avif">
-                            <img src="<?= "images/" . snake_case($product["name"]) . ".jpg" ?>" alt="<?= "Image of " . $product["name"] ?>">
-                        </picture>
-                    </td>
+                        <img 
+                            src="images/<?= $product["fallback"] ?>" 
+                            alt="Image of <?= $product["name"] ?>"
+                        >
+                    </picture></td>
+                    
+                    <!-- Cells that contain the price info --><?php 
+                    foreach ($product["prices"] as $key => $value) {
+                        if ($value === "Unavailable") { ?>
+                            <td class="unavailable">Unavailable</td><?php 
+                        } else { 
+                            // Combine the product ID and its portion size because one input field cannot send multiple values at the same time. 
+                            $product_code = $product["id"] . "-" . $key; ?>
 
-                    <?php 
-                        foreach ($product["prices"] as $key => $value) {
-                            if ($value === "Unavailable") {
-                    ?>
-                        <td class="unavailable">Unavailable</td>
-                    <?php } else { ?>
-                        <td class="option">
-                            <p><?= $value ?></p>
-                            <input type="checkbox" name="selected_items[]" value="<?= $product_id ?>_<?= $key ?>" form="order_process">
-                        </td>
-                    <?php
-                            }
+                            <td><section class="options">
+                                <p>$<?= $value?></p>
+
+                                <input 
+                                    type="checkbox" 
+                                    name="selected_items[]" 
+                                    value="<?= $product_code ?>" 
+                                    form="order_process"
+                                >
+                            </section></td><?php
                         }
-                    ?>
-                </tr>
-            <?php } ?>
+                    } ?>
+
+                </tr><?php 
+            } ?>
         </tbody>
     </table>
 
-    <section>
+    <section class="buttons">
         <button onclick="uncheckAll()">Reset</button>
         <button type="submit" form="order_process">Order</button>
     </section>
 
     <script>
+        // Uncheck all checkboxes.
         function uncheckAll() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
