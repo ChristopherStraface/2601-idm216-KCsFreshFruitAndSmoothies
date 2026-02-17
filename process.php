@@ -4,8 +4,7 @@
     include("include/build_form.php");
 
     // The tax rate in Philly is 6% state plus 2% local, subject to change.
-    $tax_rate_percentage = 6 + 2;
-    $tax_rate = $tax_rate_percentage / 100;
+    $tax_rate = 0.08;
 
     // Change a snake-case string to displayed item name.
     function de_snake_case($string) {
