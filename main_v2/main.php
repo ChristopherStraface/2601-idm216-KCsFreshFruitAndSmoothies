@@ -16,13 +16,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./table_v2.css">
+    <link rel="stylesheet" href="./table.css">
 </head>
 <body>
     <form 
-        id="customize" 
-        method="POST" 
-        action="customize_v2.php">
+        id="selection" 
+        method="get" 
+        action="customize.php">
     </form>
 
     <h1><?= $page_title ?></h1>
@@ -34,7 +34,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Image</th>
-                <th>Sizes</th>
+                <th>Select</th>
             </tr>
         </thead>
         <tbody><?php 
@@ -46,34 +46,23 @@
                     <!-- Cell that contains the product image -->
                     <td><picture>
                         <source 
-                            srcset="images/<?= $product["image"] ?>" 
+                            srcset="../images/<?= $product["image"] ?>" 
                             type="image/avif"
                         >
 
                         <img 
-                            src="images/<?= $product["fallback"] ?>" 
+                            src="../images/<?= $product["fallback"] ?>" 
                             alt="Image of <?= $product["name"] ?>"
                         >
                     </picture></td>
-                    
-                    <!-- Cells that contain the price info -->
-                    <td><fieldset><?php 
-                    foreach ($product["prices"] as $key => $value) {
-                        if ($value !== "Unavailable") {
-                            // Combine the product ID and its portion size because one input field cannot send multiple values at the same time. 
-                            $product_code = $product["id"] . "-" . $key; ?>
-                            <div class="options">
-                                <label for="<?= $product_code ?>"><?= ucfirst($key) ?>: $<?= $value?></label>
-                                <input 
-                                    type="radio" 
-                                    id="<?= $product_code ?>"
-                                    name="selected_item" 
-                                    value="<?= $product_code ?>" 
-                                    form="customize">
-                            </div><?php
-                        }
-                    } ?></fieldset></td>
 
+                    <td>
+                        <input 
+                            type="radio"
+                            name="product_id"
+                            value="<?= $product["id"] ?>"
+                            form="selection">
+                    </td>
                 </tr><?php 
             } ?>
         </tbody>
@@ -81,7 +70,7 @@
 
     <section class="buttons">
         <button onclick="uncheckAll()">Reset</button>
-        <button type="submit" form="customize">Customize</button>
+        <button type="submit" form="selection" onclick="uncheckAll()">Customize</button>
     </section>
 
     <script>
