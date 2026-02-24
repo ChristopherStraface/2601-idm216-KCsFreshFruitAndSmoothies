@@ -1,7 +1,7 @@
 <?php
-    include("include/database.php");
-    include("include/fetch_products.php");
-    include("include/build_form.php");
+    include("../include/database.php");
+    include("../include/fetch_products.php");
+    include("../include/build_form.php");
 
     // The tax rate in Philly is 6% state plus 2% local, subject to change.
     $tax_rate = 0.08;
@@ -69,7 +69,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="./table.css">
 </head>
 <body>
     <table>

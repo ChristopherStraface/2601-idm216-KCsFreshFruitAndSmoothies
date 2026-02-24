@@ -1,6 +1,6 @@
 <?php
-    include("include/database.php");
-    include("include/fetch_products.php");
+    include("../include/database.php");
+    include("../include/fetch_products.php");
 
     $page_title = "KC's - Main Menu Items";
 ?>
@@ -16,25 +16,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="./table_v2.css">
 </head>
 <body>
     <form 
-        id="order_process" 
+        id="customize" 
         method="POST" 
-        action="process.php">
+        action="customize_v2.php">
     </form>
 
+    <h1><?= $page_title ?></h1>
+
     <table>
-        <caption><?= $page_title ?></caption>
+        <caption>Select the Product You Want</caption>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Image</th>
-                <th>Small</th>
-                <th>Medium</th>
-                <th>Large</th>
+                <th>Sizes</th>
             </tr>
         </thead>
         <tbody><?php 
@@ -56,26 +56,23 @@
                         >
                     </picture></td>
                     
-                    <!-- Cells that contain the price info --><?php 
+                    <!-- Cells that contain the price info -->
+                    <td><fieldset><?php 
                     foreach ($product["prices"] as $key => $value) {
-                        if ($value === "Unavailable") { ?>
-                            <td class="unavailable">Unavailable</td><?php 
-                        } else { 
+                        if ($value !== "Unavailable") {
                             // Combine the product ID and its portion size because one input field cannot send multiple values at the same time. 
                             $product_code = $product["id"] . "-" . $key; ?>
-
-                            <td><section class="options">
-                                <p>$<?= $value?></p>
-
+                            <div class="options">
+                                <label for="<?= $product_code ?>"><?= ucfirst($key) ?>: $<?= $value?></label>
                                 <input 
-                                    type="checkbox" 
-                                    name="selected_items[]" 
+                                    type="radio" 
+                                    id="<?= $product_code ?>"
+                                    name="selected_item" 
                                     value="<?= $product_code ?>" 
-                                    form="order_process"
-                                >
-                            </section></td><?php
+                                    form="customize">
+                            </div><?php
                         }
-                    } ?>
+                    } ?></fieldset></td>
 
                 </tr><?php 
             } ?>
@@ -84,7 +81,7 @@
 
     <section class="buttons">
         <button onclick="uncheckAll()">Reset</button>
-        <button type="submit" form="order_process">Order</button>
+        <button type="submit" form="customize">Customize</button>
     </section>
 
     <script>
