@@ -39,7 +39,7 @@ caption {
     margin-bottom: 0.5rem;
 }
 
-th, td, button {
+th, td, a.btn, button {
     padding: 0.5rem 0.75rem;
 }
 
@@ -94,8 +94,7 @@ fieldset {
     align-items: center;
     display: flex;
     flex-flow: row nowrap;
-    gap: 1rem;
-    justify-content: space-between;
+    gap: 0.5rem;
     width: 100%;
 }
 
@@ -119,6 +118,5 @@ a.btn, button {
     font-size: 1.5rem;
     font-weight: 550;
     height: 3rem;
-    padding: 0.5rem 0.75rem;
     text-decoration: none;
 }

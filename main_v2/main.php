@@ -69,19 +69,8 @@
     </table>
 
     <section class="buttons">
-        <button onclick="uncheckAll()">Reset</button>
-        <button type="submit" form="selection" onclick="uncheckAll()">Customize</button>
+        <button type="reset">Reset</button>
+        <button type="submit" form="selection">Customize</button>
     </section>
-
-    <script>
-        // Uncheck all checkboxes.
-        function uncheckAll() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
-            });
-        }
-    </script>
 </body>
 </html>

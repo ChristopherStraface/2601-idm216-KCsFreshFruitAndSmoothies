@@ -5,6 +5,10 @@
     include("../include/fetch_products.php");
 
     $page_title = "Customization";
+
+    $product_ids = array_column($products, 'id');
+    $index = array_search($target_id, $product_ids);
+    $target_item = $products[$index];
 ?>
 
 <!DOCTYPE html>
@@ -26,15 +30,10 @@
         method="post" 
         action="process.php">
     </form>
+    <input type="hidden" name="id" value="<?= $target_id ?>" form="customize">
 
     <h1><?= $page_title ?></h1>
-    
-    <?php
-        $product_ids = array_column($products, 'id');
-        $index = array_search($target_id, $product_ids);
-        $target_item = $products[$index];
-    ?>
-    
+
     <table>
         <caption><?= $target_item["name"] ?></caption>
         <thead>
@@ -70,7 +69,6 @@
                             foreach ($target_item["ingredients"] as $ingredient => $selection) { ?>
                                 <div class="option">
                                     <input 
-                                        required
                                         type="checkbox"
                                         id="<?= $ingredient ?>"
                                         name="ingredients[]"
@@ -91,7 +89,6 @@
                             foreach ($target_item["add_ons"] as $add_on => $selection) { ?>
                                 <div class="option">
                                     <input 
-                                        required
                                         type="checkbox"
                                         id="<?= $add_on ?>"
                                         name="add_ons[]"
@@ -109,24 +106,9 @@
     </table>
 
     <section class="buttons">
-        <a href="./main.php" class="btn" onclick="uncheckAll()">Back to Menu</a>
-        <button onclick="uncheckAll()">Reset</button>
-        <button type="submit" form="customize" onclick="uncheckAll()">Add to Cart</button>
+        <a href="./main.php" class="btn">Back to Menu</a>
+        <button type="reset">Reset</button>
+        <button type="submit" form="customize">Add to Cart</button>
     </section>
-
-    <script>
-        // Uncheck everything.
-        function uncheckAll() {
-            const radios = document.querySelectorAll('input[type="radio"]');
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-            radios.forEach(radio => {
-                radio.checked = false;
-            });
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
-            });
-        }
-    </script>
 </body>
 </html>
