@@ -58,6 +58,19 @@
         return $price_list;
     }
 
+    function fetch_items($input, $type) {
+        // When there are available items, fetch content from arrays.
+        if ($input) {
+            $items_array = [];
+            foreach ($type as $category) {
+                $items_array[$category] = false;
+            }
+            return $items_array;
+        } else {
+            return "Unavailable";
+        }
+    }
+
     while ($row_products = $result_products->fetch_assoc()) {
         $product = [
             "id" => $row_products["id"],
@@ -68,8 +81,8 @@
 
             "prices" => price_list($row_products["one_size"], $row_products["small"], $row_products["medium"], $row_products["large"]),
 
-            "ingredients" => check_existence($row_products["ingredients"]),
-            "add_ons" => check_existence($row_products["add_ons"])
+            "ingredients" => fetch_items($row_products["ingredients"], $ingredients),
+            "add_ons" => fetch_items($row_products["add_ons"], $add_ons)
         ]; 
         array_push($products, $product);
     }
