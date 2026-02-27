@@ -1,12 +1,8 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    if (isset($_POST)) {
-        $_SESSION['cart'][] = $_POST;
+    if (!empty($_POST)) {
+        array_push($_SESSION['cart'], $_POST);
     }
 
     include("../include/database.php");
@@ -56,22 +52,19 @@
         </thead>
         <tbody><?php 
             foreach ($_SESSION['cart'] as $cart_item) {
-                print_r($cart_item);
                 $index = array_search($cart_item["id"], $product_ids);
                 $target_item = $products[$index]; ?>
                 <tr>
                     <?php
                         if (isset($cart_item["ingredients"])) { 
                             $stringified_ingredients = stringify($cart_item["ingredients"]);
-                        } else {
-                            $stringified_ingredients = "";
                         }
                         $row_price = $target_item["prices"][$cart_item["size"]];
                     ?>
                     <td><?= $target_item["id"] ?></td>
                     <td><?= $target_item["name"] ?></td>
                     <td><?= ucfirst($cart_item["size"]) ?></td>
-                    <td><?= $stringified_ingredients; ?></td>
+                    <td><?= $stringified_ingredients ?: ""; ?></td>
                     <td>$<?= $row_price ?></td>
                     <?php $subtotal += $row_price; ?>
                 </tr><?php 

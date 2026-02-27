@@ -4,6 +4,8 @@
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
+
+    $cart_count = count($_SESSION['cart']);
     
     $target_id = $_GET['product_id'];
 
@@ -113,7 +115,8 @@
 
     <section class="buttons">
         <a href="./main.php" class="btn">Back to Menu</a>
-        <button type="reset">Reset</button>
+        <button type="reset" onclick="window.location.reload()">Reset</button>
+        <a href="./process.php" class="btn">Cart (<?= $cart_count ?>)</a>
         <button type="submit" form="customize">Add to Cart</button>
     </section>
 </body>

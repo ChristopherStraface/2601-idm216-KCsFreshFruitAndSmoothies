@@ -77,7 +77,7 @@
     </table>
 
     <section class="buttons">
-        <button type="reset">Reset</button>
+        <button type="reset" onclick="window.location.reload()">Reset</button>
         <button type="submit" form="selection">Customize</button>
         <a href="./process.php" class="btn">Cart (<?= $cart_count ?>)</a>
     </section>
