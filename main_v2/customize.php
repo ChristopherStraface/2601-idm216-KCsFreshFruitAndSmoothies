@@ -1,4 +1,10 @@
 <?php
+    session_start();
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+    
     $target_id = $_GET['product_id'];
 
     include("../include/database.php");

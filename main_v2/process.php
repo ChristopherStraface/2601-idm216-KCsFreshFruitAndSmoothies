@@ -1,6 +1,12 @@
 <?php
+    session_start();
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
     if (isset($_POST)) {
-        $selected_item = $_POST;
+        $_SESSION['cart'][] = $_POST;
     }
 
     include("../include/database.php");
@@ -13,8 +19,6 @@
     $subtotal = 0;
 
     $product_ids = array_column($products, 'id');
-    $index = array_search($selected_item["id"], $product_ids);
-    $target_item = $products[$index];
 
     function stringify($array) {
         if (isset($array)) {
@@ -50,30 +54,39 @@
                 <th>Price</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <?php
-                    $stringified_ingredients = stringify($selected_item["ingredients"]);
-                    $row_price = $target_item["prices"][$selected_item["size"]];
-                ?>
-                <td><?= $target_item["id"] ?></td>
-                <td><?= $target_item["name"] ?></td>
-                <td><?= ucfirst($selected_item["size"]) ?></td>
-                <td><?= $stringified_ingredients; ?></td>
-                <td>$<?= $row_price ?></td>
-                <?php $subtotal += $row_price; ?>
-            </tr><?php 
-            
-            if (isset($selected_item["add_ons"])) { 
-                foreach ($selected_item["add_ons"] as $add_on) { ?>
-                    <tr>
-                        <td></td>
-                        <td>Add-on</td>
-                        <td></td>
-                        <td><?= $add_on ?></td>
-                        <td>$1.00</td>
-                        <?php $subtotal += 1.00; ?>
-                    </tr><?php 
+        <tbody><?php 
+            foreach ($_SESSION['cart'] as $cart_item) {
+                print_r($cart_item);
+                $index = array_search($cart_item["id"], $product_ids);
+                $target_item = $products[$index]; ?>
+                <tr>
+                    <?php
+                        if (isset($cart_item["ingredients"])) { 
+                            $stringified_ingredients = stringify($cart_item["ingredients"]);
+                        } else {
+                            $stringified_ingredients = "";
+                        }
+                        $row_price = $target_item["prices"][$cart_item["size"]];
+                    ?>
+                    <td><?= $target_item["id"] ?></td>
+                    <td><?= $target_item["name"] ?></td>
+                    <td><?= ucfirst($cart_item["size"]) ?></td>
+                    <td><?= $stringified_ingredients; ?></td>
+                    <td>$<?= $row_price ?></td>
+                    <?php $subtotal += $row_price; ?>
+                </tr><?php 
+                
+                if (isset($cart_item["add_ons"])) { 
+                    foreach ($cart_item["add_ons"] as $add_on) { ?>
+                        <tr>
+                            <td></td>
+                            <td>Add-on</td>
+                            <td></td>
+                            <td><?= $add_on ?></td>
+                            <td>$1.00</td>
+                            <?php $subtotal += 1.00; ?>
+                        </tr><?php 
+                    }
                 }
             } ?>
 
@@ -105,8 +118,15 @@
         </tbody>
     </table>
 
+    <form 
+        id="clear_cart"
+        method="post"
+        action="./clear_cart.php">
+    </form>
+
     <section class="buttons">
         <a href="./main.php" class="btn">Back to Menu</a>
+        <button type="submit" form="clear_cart">Checkout</button>
     </section>
 </body>
 </html>

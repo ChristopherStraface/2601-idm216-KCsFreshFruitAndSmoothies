@@ -1,4 +1,12 @@
 <?php
+    session_start();
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+    $cart_count = count($_SESSION['cart']);
+
     include("../include/database.php");
     include("../include/fetch_products.php");
 
@@ -71,6 +79,7 @@
     <section class="buttons">
         <button type="reset">Reset</button>
         <button type="submit" form="selection">Customize</button>
+        <a href="./process.php" class="btn">Cart (<?= $cart_count ?>)</a>
     </section>
 </body>
 </html>
