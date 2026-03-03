@@ -11,7 +11,7 @@
         </svg>
         <span class="nav-label">Order</span>
     </a>
-    <a href="history.php" class="nav-btn" style="text-decoration:none;">
+    <a class="nav-btn not-allowed" style="text-decoration:none;">
         <svg class="nav-icon" viewBox="0 0 32 32" fill="none">
             <path d="M16 6V16L22 19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             <circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
