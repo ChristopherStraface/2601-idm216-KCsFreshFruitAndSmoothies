@@ -31,9 +31,6 @@ html {
   --text-muted: #a8998f;
 }
 
-form {display: none;}
-.not-allowed {cursor: not-allowed !important;}
-
 .app-container {
   width: 100%;
   max-width: 430px;
