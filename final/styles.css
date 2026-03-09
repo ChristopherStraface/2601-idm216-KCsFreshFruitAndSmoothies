@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+.disabled {
+  cursor: not-allowed;
+}
+
 body {
   font-family: 'Nunito', sans-serif;
   background-color: #f0e8e0;
