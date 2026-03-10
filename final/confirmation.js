@@ -22,10 +22,10 @@ if (saved) {
 }
 
 document.getElementById('returnHomeBtn').addEventListener('click', function() {
-  window.location.href = 'index.html';
+  window.location.href = 'index.php';
 });
 
 document.getElementById('pickedUpBtn').addEventListener('click', function() {
   localStorage.removeItem('kcs_last_order');
-  window.location.href = 'index.html';
+  window.location.href = 'index.php';
 });

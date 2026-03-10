@@ -1,3 +1,5 @@
+<?php include './database.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +19,7 @@
   <main class="main-content">
     <div class="screen active">
 
-      <a href="index.html" class="back-btn" style="position:fixed;top:24px;left:24px;z-index:200;text-decoration:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;">
+      <a href="index.php" class="back-btn" style="position:fixed;top:24px;left:24px;z-index:200;text-decoration:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;">
         <svg viewBox="0 0 36 36" fill="none" style="width:36px;height:36px;">
           <path d="M22.5 9L13.5 18L22.5 27" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
@@ -103,7 +105,7 @@
           </div>
         </div>
 
-        <a href="bag.html" class="add-to-bag-btn" style="text-decoration:none;">
+        <a href="bag.php" class="add-to-bag-btn" style="text-decoration:none;">
           <span>Add to Bag</span>
           <span id="totalPrice">$5.50</span>
         </a>

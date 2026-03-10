@@ -17,7 +17,7 @@
   <main class="main-content">
     <div class="screen active">
 
-      <a href="index.html" class="back-btn" style="position:fixed;top:24px;left:24px;z-index:200;text-decoration:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;">
+      <a href="index.php" class="back-btn" style="position:fixed;top:24px;left:24px;z-index:200;text-decoration:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;">
         <svg viewBox="0 0 36 36" fill="none" style="width:36px;height:36px;">
           <path d="M22.5 9L13.5 18L22.5 27" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
@@ -29,7 +29,7 @@
         <!-- Empty state (shown when no items) -->
         <div class="empty-cart" id="emptyState" style="display:none;">
           <p>Don't leave your cup empty!</p>
-          <a href="index.html" class="secondary-btn" style="text-decoration:none;display:inline-block;text-align:center;">Start Mixing</a>
+          <a href="index.php" class="secondary-btn" style="text-decoration:none;display:inline-block;text-align:center;">Start Mixing</a>
         </div>
 
         <!-- Sample item (remove/replace when wiring to PHP) -->
@@ -54,7 +54,7 @@
                 <div class="cart-item-price">$6.50</div>
               </div>
               <div class="item-actions">
-                <a href="customize.html?item=P.B.+Banana" class="item-action-btn edit-btn" style="text-decoration:none;">
+                <a href="customize.php?item=P.B.+Banana" class="item-action-btn edit-btn" style="text-decoration:none;">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
@@ -73,7 +73,7 @@
             <span>Subtotal</span>
             <span id="subtotalAmount">$6.50</span>
           </div>
-          <a href="checkout.html" class="checkout-btn" style="text-decoration:none;display:block;text-align:center;">
+          <a href="checkout.php" class="checkout-btn" style="text-decoration:none;display:block;text-align:center;">
             Proceed to Checkout
           </a>
         </div>

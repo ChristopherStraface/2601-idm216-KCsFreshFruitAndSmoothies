@@ -1,3 +1,7 @@
+<?php 
+  include './database.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +21,7 @@
   <main class="main-content">
     <div class="screen active">
 
-      <a href="confirmation.html" class="order-status-banner" id="orderStatusBanner" style="text-decoration:none;">
+      <a href="confirmation.php" class="order-status-banner" id="orderStatusBanner" style="text-decoration:none;">
         <div class="order-status-left">
           <svg class="order-status-icon" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
@@ -50,31 +54,19 @@
         <h2 class="welcome-title">What are you craving?</h2>
         <div class="welcome-hint"><p>👋 Tap any treat to customize!</p></div>
         <div class="smoothie-grid">
-
-          <a href="customize.html?item=Custom+Smoothie" class="smoothie-card" style="text-decoration:none;">
+        
+        <?php
+          foreach ($products as $product) {
+        ?>
+          <a href="customize.php?id=<?= $product['id'] ?>" class="smoothie-card" style="text-decoration:none;">
             <div class="card-bg"></div>
-            <img src="./img/smoothie.avif" alt="Custom Smoothie" class="smoothie-image">
-            <h3 class="smoothie-name">Custom<br>Smoothie</h3>
+            <img src="./images/<?= $product['image'] ?>" alt="<?= $product['name'] ?>" class="smoothie-image">
+            <h3 class="smoothie-name"><?= $product['name'] ?></h3>
           </a>
-
-          <a href="customize.html?item=Fruit+Salad" class="smoothie-card" style="text-decoration:none;">
-            <div class="card-bg"></div>
-            <img src="./img/fruit_salad.avif" alt="Fruit Salad" class="smoothie-image">
-            <h3 class="smoothie-name">Custom<br>Fruit Salad</h3>
-          </a>
-
-          <a href="customize.html?item=P.B.+Banana" class="smoothie-card" style="text-decoration:none;">
-            <div class="card-bg"></div>
-            <img src="./img/pb_banana.avif" alt="P.B. Banana" class="smoothie-image">
-            <h3 class="smoothie-name">P.B. Banana<br>Smoothie</h3>
-          </a>
-
-          <a href="customize.html?item=Taro" class="smoothie-card" style="text-decoration:none;">
-            <div class="card-bg"></div>
-            <img src="./img/taro.avif" alt="Taro" class="smoothie-image">
-            <h3 class="smoothie-name">Taro<br>Smoothie</h3>
-          </a>
-
+        <?php
+          }
+        ?>
+        
         </div>
       </div>
     </div>

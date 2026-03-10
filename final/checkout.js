@@ -106,7 +106,7 @@ function saveOrderAndNavigate() {
 
   localStorage.setItem('kcs_last_order', JSON.stringify(order));
   showToast('Order Placed', 'Your order has been placed successfully!', 'success');
-  setTimeout(() => { window.location.href = 'confirmation.html'; }, 600);
+  setTimeout(() => { window.location.href = 'confirmation.php'; }, 600);
 }
 
 function showToast(title, message, type = 'success') {
