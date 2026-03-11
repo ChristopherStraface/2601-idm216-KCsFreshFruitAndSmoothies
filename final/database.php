@@ -39,6 +39,12 @@
         }
     }
 
+    function get_item_info($id, $products) {
+        $target_index = array_search($id, array_column($products, 'id'));
+        $target_item = $products[$target_index];
+        return $target_item;
+    }
+
     function price_list($input_row) {
         $price_list = [
             "small" => check_existence($input_row["small"]),
@@ -87,5 +93,20 @@
             "add_ons" => $row_products["add_ons"] ? $add_ons : [],
         ]; 
         array_push($products,$product);
+    }
+
+    session_start();
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+    if (!isset($_SESSION['subtotal'])) {
+        $_SESSION['subtotal'] = 0;
+    }
+    if (!empty($_POST)) {
+        array_push($_SESSION['cart'], $_POST);
+        if (!empty($_POST["item_price"])) {
+            $_SESSION['subtotal'] += $_POST["item_price"];
+        }
     }
 ?>
