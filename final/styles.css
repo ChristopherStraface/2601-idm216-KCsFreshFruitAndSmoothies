@@ -8,6 +8,14 @@
   cursor: not-allowed !important;
 }
 
+form {
+  display: none;
+}
+
+input[type="radio"] {
+  appearance: none;
+}
+
 body {
   font-family: 'Nunito', sans-serif;
   background-color: #f0e8e0;

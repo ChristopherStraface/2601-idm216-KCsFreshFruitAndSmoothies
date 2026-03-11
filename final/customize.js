@@ -12,9 +12,9 @@ const params = new URLSearchParams(window.location.search);
 const itemName = params.get('item') || 'Custom Smoothie';
 const data = catalogue[itemName] || catalogue['Custom Smoothie'];
 
-document.getElementById('itemTitle').textContent = itemName;
-document.getElementById('itemImage').src = data.image;
-document.getElementById('itemImage').alt = itemName;
+// document.getElementById('itemTitle').textContent = itemName;
+// document.getElementById('itemImage').src = data.image;
+// document.getElementById('itemImage').alt = itemName;
 
 // Pre-check defaults
 data.defaults.forEach(val => {

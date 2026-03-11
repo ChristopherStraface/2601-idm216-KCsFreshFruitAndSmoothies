@@ -1,4 +1,8 @@
-<?php include './database.php' ?>
+<?php 
+  include './database.php';
+
+  $target_item = get_item_info($_GET['id'], $products);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +20,12 @@
 
   <?php include './component/header.php' ?>
 
+  <form action="bag.php" method="post" id="customize"></form>
+
+  <input type="hidden" form="customize" name="count" value="1">
+
+  <input type="hidden" form="customize" name="id" value="<?= $target_item["id"] ?>">
+
   <main class="main-content">
     <div class="screen active">
 
@@ -26,89 +36,91 @@
       </a>
 
       <div class="customize-content">
-        <h2 class="screen-title" id="itemTitle">Custom Smoothie</h2>
+        <h2 class="screen-title" id="itemTitle"><?= $target_item["name"] ?></h2>
 
         <div class="customize-image">
-          <img id="itemImage" src="./img/smoothie.avif" alt="Smoothie">
+          <img id="itemImage" src="./images/<?= $target_item["image"] ?>" alt="<?= $target_item["name"] ?>">
         </div>
 
         <!-- Size -->
         <div class="section">
           <h3 class="section-title">Select Size</h3>
           <div class="size-options">
-            <button class="size-btn" data-size="Small" data-price="4.50" onclick="selectSize(this)">
-              <span class="size-label">Small</span>
-              <span class="size-price">$4.50</span>
-            </button>
-            <button class="size-btn active" data-size="Medium" data-price="5.50" onclick="selectSize(this)">
-              <span class="size-label">Medium</span>
-              <span class="size-price">$5.50</span>
-            </button>
-            <button class="size-btn" data-size="Large" data-price="6.50" onclick="selectSize(this)">
-              <span class="size-label">Large</span>
-              <span class="size-price">$6.50</span>
-            </button>
+
+          <?php
+            foreach ($target_item["prices"] as $size => $price) {
+              if ($price) {
+          ?>
+
+            <label class="size-btn" data-size="<?= ucfirst($size) ?>" data-price="<?= $price ?>" onclick="selectSize(this)" >
+              <span class="size-label"><?= ucfirst($size) ?></span>
+              <input type="radio" form="customize" name="size" value="<?= $size ?>" class="size-label">
+              <span class="size-price">$<?= $price ?></span>
+            </label>
+          
+          <?php
+            } }
+          ?>
+
           </div>
         </div>
 
+        <?php
+          if ($target_item["ingredients"]) {
+        ?>
+
         <!-- Ingredients -->
-        <div class="section">
+        <div class="section ingredients">
           <h3 class="section-title">Ingredients</h3>
           <div class="checkbox-grid">
+          <?php
+            foreach ($target_item["ingredients"] as $ingredient) {
+          ?>
+
             <label class="checkbox-label">
-              <input type="checkbox" class="ingredient-checkbox" value="Strawberry">
-              <span class="checkbox-custom"></span><span>Strawberry</span>
+              <input type="checkbox" class="ingredient-checkbox" value="<?= $ingredient ?>" form="customize" name="ingredients[]" value="<?= $ingredient ?>">
+              <span class="checkbox-custom"></span><span><?= $ingredient ?></span>
             </label>
-            <label class="checkbox-label">
-              <input type="checkbox" class="ingredient-checkbox" value="Banana">
-              <span class="checkbox-custom"></span><span>Banana</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" class="ingredient-checkbox" value="Mango">
-              <span class="checkbox-custom"></span><span>Mango</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" class="ingredient-checkbox" value="Blueberry">
-              <span class="checkbox-custom"></span><span>Blueberry</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" class="ingredient-checkbox" value="Pineapple">
-              <span class="checkbox-custom"></span><span>Pineapple</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" class="ingredient-checkbox" value="Spinach">
-              <span class="checkbox-custom"></span><span>Spinach</span>
-            </label>
+
+          <?php
+            }
+          ?>
           </div>
         </div>
+
+        <?php
+          }
+
+          if ($target_item["add_ons"]) {
+        ?>
 
         <!-- Add-ons -->
         <div class="section">
           <h3 class="section-title">Add-ons (+$1.00 each)</h3>
           <div class="checkbox-grid">
+          <?php
+            foreach ($target_item["add_ons"] as $add_on) {
+          ?>
+
             <label class="checkbox-label">
-              <input type="checkbox" class="addon-checkbox" value="Protein Powder" onchange="updateTotal()">
-              <span class="checkbox-custom"></span><span>Protein Powder</span>
+              <input type="checkbox" class="addon-checkbox" value="<?= $add_on ?>" onchange="updateTotal()" form="customize" name="add_ons[]" value="<?= $add_on ?>">
+              <span class="checkbox-custom"></span><span><?= $add_on ?></span>
             </label>
-            <label class="checkbox-label">
-              <input type="checkbox" class="addon-checkbox" value="Chia Seeds" onchange="updateTotal()">
-              <span class="checkbox-custom"></span><span>Chia Seeds</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" class="addon-checkbox" value="Peanut Butter" onchange="updateTotal()">
-              <span class="checkbox-custom"></span><span>Peanut Butter</span>
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" class="addon-checkbox" value="Honey" onchange="updateTotal()">
-              <span class="checkbox-custom"></span><span>Honey</span>
-            </label>
+          
+          <?php
+            }
+          ?>
           </div>
         </div>
 
-        <a href="bag.php" class="add-to-bag-btn" style="text-decoration:none;">
+        <?php
+          }
+        ?>
+
+        <button type="submit" form="customize" class="add-to-bag-btn" style="text-decoration:none;">
           <span>Add to Bag</span>
           <span id="totalPrice">$5.50</span>
-        </a>
+        </button>
       </div>
 
     </div>
@@ -117,6 +129,22 @@
   <?php include './component/footer.php' ?> 
 
 </div>
+<script>
+  const form = document.getElementById('customize');
+  const ingredientsSection = document.querySelectorAll('div.ingredients');
+  form.addEventListener('submit', (event) => {
+    const ingredientsCheckboxes = document.querySelectorAll('.ingredient-checkbox:checked');
+    if (ingredientsSection.length === 1) {
+      if (ingredientsCheckboxes.length === 0) {
+        alert('You need to select at least one (1) ingredient.');
+        event.preventDefault();
+      } else if (ingredientsCheckboxes.length > 3) {
+        alert('You may not select more than three (3) ingredients.');
+        event.preventDefault();
+      }
+    }
+  });
+</script>
 <script src="./customize.js"></script>
 </body>
 </html>
