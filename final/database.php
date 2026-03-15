@@ -20,13 +20,14 @@
     if ($connection->connect_error)
         die("Connection failed: " . $connection->connect_error);
 
-    // Change item name to a snake-case string.
+    // Change item name to a snake-case string
     function snake_case($string) {
         $lower_case = strtolower($string);
         $final_string = str_replace(" ", "_", $lower_case);
         return $final_string;
     }
 
+    // Process the items' prices
     function check_existence($input) {
         $input_type = gettype($input);
         if (($input_type === "integer") && ($input !== 0)) {
@@ -39,19 +40,11 @@
         }
     }
 
+    // Fetch all information about one product
     function get_item_info($id, $products) {
         $target_index = array_search($id, array_column($products, 'id'));
         $target_item = $products[$target_index];
         return $target_item;
-    }
-
-    function price_list($input_row) {
-        $price_list = [
-            "small" => check_existence($input_row["small"]),
-            "medium" => check_existence($input_row["medium"]),
-            "large" => check_existence($input_row["large"])
-        ]; 
-        return $price_list;
     }
 
     // Fetch ingredients
@@ -82,12 +75,16 @@
     while ($row_products = $result_products->fetch_assoc()) {
         $product = [
             "id" => $row_products["id"],
-
             "name" => $row_products["name"],
+
             "image" => snake_case($row_products["name"]) . ".avif",
             "fallback" => snake_case($row_products["name"]) . ".jpg",
 
-            "prices" => price_list($row_products),
+            "prices" => [
+                "small" => check_existence($row_products["small"]),
+                "medium" => check_existence($row_products["medium"]),
+                "large" => check_existence($row_products["large"])
+            ],
 
             "ingredients" => $row_products["ingredients"] ? $ingredients : [],
             "add_ons" => $row_products["add_ons"] ? $add_ons : [],
@@ -95,18 +92,10 @@
         array_push($products,$product);
     }
 
+    // Initiate a session at the beginning of all pages
     session_start();
-
+    // If it is a new session, create a new selected product list
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
-    }
-    if (!isset($_SESSION['subtotal'])) {
-        $_SESSION['subtotal'] = 0;
-    }
-    if (!empty($_POST)) {
-        array_push($_SESSION['cart'], $_POST);
-        if (!empty($_POST["item_price"])) {
-            $_SESSION['subtotal'] += $_POST["item_price"];
-        }
     }
 ?>

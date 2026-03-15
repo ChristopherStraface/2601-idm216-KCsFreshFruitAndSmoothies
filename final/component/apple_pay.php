@@ -54,4 +54,122 @@
         </div>
         <button class="ap-cancel-btn" id="apCancelBtn">Cancel</button>
     </div>
+
+    <script>
+        const subtotal = <?= number_format($subtotal, 2) ?>;
+        const tax = <?= number_format($tax, 2) ?>;
+
+        function fmt(n) { return '$' + n.toFixed(2); }
+        function saveOrderAndNavigate() {
+            showToast('Order Placed', 'Your order has been placed successfully!', 'success');
+            setTimeout(() => { window.location.href = 'confirmation.php'; }, 600);
+        }
+        function showToast(title, message, type = 'success') {
+            let container = document.getElementById('toastContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toastContainer';
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease-out reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        let currentPayment = 'credit';
+
+        function selectPayment(btn, type) {
+            document.querySelectorAll('.payment-option').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentPayment = type;
+            const orderBtn = document.getElementById('placeOrderBtn');
+            orderBtn.textContent = type === 'apple' ? 'Pay with Apple Pay' : 'Place Order';
+        }
+
+        document.getElementById('placeOrderBtn').addEventListener('click', function() {
+            if (currentPayment === 'apple') {
+                openApplePaySheet();
+            } else {
+                saveOrderAndNavigate();
+            }
+        });
+
+        function openApplePaySheet() {
+            const total = subtotal + tax;
+            document.getElementById('apAmount').textContent = fmt(total);
+            document.getElementById('apFaceIdSection').classList.remove('hidden');
+            document.getElementById('apSuccessSection').classList.add('hidden');
+            document.getElementById('apFaceIdRing').classList.remove('scanning', 'success');
+            document.getElementById('apFaceIdLabel').textContent = 'Double-click to pay';
+            document.getElementById('apFaceIdIcon').classList.remove('scanning');
+            document.getElementById('apCancelBtn').classList.remove('hidden');
+            document.getElementById('applePayOverlay').classList.add('active');
+            setTimeout(simulateFaceIdScan, 600);
+        }
+
+        function simulateFaceIdScan() {
+            const ring    = document.getElementById('apFaceIdRing');
+            const icon    = document.getElementById('apFaceIdIcon');
+            const label = document.getElementById('apFaceIdLabel');
+
+            label.textContent = 'Scanning...';
+            ring.classList.add('scanning');
+            icon.classList.add('scanning');
+
+            setTimeout(() => {
+                ring.classList.remove('scanning');
+                ring.classList.add('success');
+                icon.classList.remove('scanning');
+
+                setTimeout(() => {
+                    document.getElementById('apFaceIdSection').classList.add('hidden');
+                    document.getElementById('apCancelBtn').classList.add('hidden');
+                    document.getElementById('apSuccessSection').classList.remove('hidden');
+
+                    const circle        = document.querySelector('.ap-check-circle');
+                    const checkPath = document.querySelector('.ap-check-path');
+                    circle.style.strokeDasharray        = '176';
+                    circle.style.strokeDashoffset     = '176';
+                    checkPath.style.strokeDasharray    = '40';
+                    checkPath.style.strokeDashoffset = '40';
+
+                    requestAnimationFrame(() => requestAnimationFrame(() => {
+                        circle.style.transition                = 'stroke-dashoffset 0.4s ease';
+                        circle.style.strokeDashoffset    = '0';
+                        setTimeout(() => {
+                            checkPath.style.transition                = 'stroke-dashoffset 0.3s ease';
+                            checkPath.style.strokeDashoffset    = '0';
+                        }, 200);
+                    }));
+
+                    setTimeout(() => {
+                        closeApplePaySheet();
+                        setTimeout(() => { saveOrderAndNavigate(); }, 300);
+                    }, 1400);
+
+                }, 300);
+            }, 1800);
+        }
+
+        function closeApplePaySheet() {
+            document.getElementById('applePayOverlay').classList.remove('active');
+        }
+
+        document.getElementById('apCancelBtn').addEventListener('click', closeApplePaySheet);
+        document.getElementById('applePayOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeApplePaySheet();
+        });
+
+        // updateTotals();
+    </script>
 </div>

@@ -1,4 +1,3 @@
-
 .confirm-hero {
   background: linear-gradient(145deg, var(--dragonfruit) 0%, #a01f40 100%);
   border-radius: 28px;
@@ -112,6 +111,7 @@
 
 /* Picked up button */
 .picked-up-btn {
+  text-decoration: none;
   width: 100%;
   display: flex;
   align-items: center;
