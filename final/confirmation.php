@@ -1,18 +1,8 @@
 <?php 
-    include './database.php'; 
+    include "./include/database.php";
 
-    // If it is a new session, set subtotal to 0
-    if (!isset($_SESSION['subtotal'])) {
-        $_SESSION['subtotal'] = 0;
-    }
-
-    // If it is a new session, set tax value
-    if (!isset($_SESSION['subtotal'])) {
-        $_SESSION['subtotal'] = 0;
-    }
-
-    $subtotal = number_format($_SESSION['subtotal'], 2);
-    $tax = number_format($subtotal * 0.08, 2);
+    $grand_subtotal = $_SESSION["receipt"]["grand_subtotal"];
+    $tip_rate = $_SESSION["receipt"]["tip_rate"];
 ?>
 
 <!DOCTYPE html>
@@ -20,17 +10,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmed — KC's</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="confirmation.css">
+    <title>Order Confirmed<?= $page_title_abbreviation ?></title>
+    <?php include "./include/styles.php" ?>
+    <link rel="stylesheet" href="./confirmation.css">
 </head>
 <body>
 <div class="app-container">
 
-    <?php include './component/header.php' ?>
+    <?php include "./components/header.php" ?>
 
     <main class="main-content">
         <div class="screen active">
@@ -39,14 +26,11 @@
                 <!-- Hero order number -->
                 <div class="confirm-hero">
                     <p class="confirm-hero-eyebrow">Your Order</p>
-                    <div class="confirm-order-number" id="orderNumber">23</div>
+                    <div class="confirm-order-number" id="orderNumber"><?= $_SESSION["receipt"]["order_number"] ?></div>
                     <p class="confirm-order-label">Order Number</p>
                     <div class="confirm-pickup-pill">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 6v6l4 2"/>
-                        </svg>
-                        Pick up in 15 minutes</strong>
+                        <?php add_icons("confirm_pickup") ?>
+                        Pick up in 15 minues</strong>
                     </div>
                 </div>
 
@@ -56,21 +40,19 @@
 
                 <!-- Order summary card -->
                 <div class="confirmation-summary">
-                    <h3 class="section-title" style="margin-bottom:14px">What's in your bag</h3>
+                    <h3 class="section-title" style="margin-bottom:14px">What's in your cart</h3>
                     <div id="confirmationOrderItems" class="confirmation-order-items"></div>
                     <div class="divider"></div>
-                    <div class="summary-row"><span>Subtotal</span><span id="confirmSubtotal">$<?= $subtotal ?></span></div>
-                    <div class="summary-row"><span>Tax</span><span id="confirmTax">$<?= $tax ?></span></div>
-                    <!-- <div class="summary-row"><span>Tip</span><span id="confirmTip">$0.00</span></div> -->
-                    <div class="summary-row total-row"><span>Total</span><span id="confirmTotal">$<?= number_format($subtotal + $tax, 2) ?></span></div>
+                    <div class="summary-row"><span>Subtotal</span><span id="confirmSubtotal">$<?= $grand_subtotal ?></span></div>
+                    <div class="summary-row"><span>Tax</span><span id="confirmTax">$<?= number_format($grand_subtotal * $tax_rate, 2) ?></span></div>
+                    <div class="summary-row total-row"><span>Total</span><span id="confirmTotal">$<?= number_format($grand_subtotal * (1 + $tax_rate), 2) ?></span></div>
+                    <div class="summary-row"><span>Tip (Pending)</span><span id="confirmTip">$<?= number_format($grand_subtotal * $tip_rate, 2) ?></span></div>
                 </div>
 
-                <button id="returnHomeBtn" class="return-home-btn">Back to the Menu</button>
+                <button onclick="window.location.href='./index.php'" id="returnHomeBtn" class="return-home-btn">Back to the Menu</button>
 
-                <a href="clear_cart.php" id="pickedUpBtn" class="picked-up-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;">
-                        <path d="M20 6L9 17l-5-5"/>
-                    </svg>
+                <a href="./clear_receipt.php" id="pickedUpBtn" class="picked-up-btn">
+                    <?php add_icons("check") ?>
                     I picked up my order
                 </a>
 
@@ -78,9 +60,8 @@
         </div>
     </main>
 
-    <?php include './component/footer.php' ?>
+    <?php include "./components/footer.php" ?>
 
 </div>
-<script src="./confirmation.js"></script>
 </body>
 </html>

@@ -92,10 +92,49 @@
         array_push($products,$product);
     }
 
+    // Include access to icons
+    include "./include/icons.php";
+
+    // Default lists
+    $cart_default = [
+        "calculation" => [
+            "subtotal" => 0,
+            "tip" => 0
+        ],
+        "products" => []
+    ];
+
+    $receipt_default = [
+        "order_number" => "",
+        "grand_subtotal" => 0,
+        "tip_rate" => 0,
+        "information" => []
+    ];
+
     // Initiate a session at the beginning of all pages
     session_start();
     // If it is a new session, create a new selected product list
     if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
+        $_SESSION['cart'] = $cart_default;
     }
+    if (!isset($_SESSION['receipt'])) {
+        $_SESSION['receipt'] = $receipt_default;
+    }
+
+    // Always re-calculate the cart's subtotal
+    function redo_subtotal() {
+        $temp_subtotal = 0;
+        foreach ($_SESSION["cart"]["products"] as $product) {
+            $item_subtotal = $product["unit_price"] * $product["count"];
+            $temp_subtotal += $item_subtotal;
+        }
+        $_SESSION["cart"]["calculation"]["subtotal"] = number_format($temp_subtotal, 2);
+    }
+
+    // Website title and abbreviation
+    $page_title = "KC's Fresh Fruit and Smoothies";
+    $page_title_abbreviation = " — KC's";
+
+    // Tax rate is 8%
+    $tax_rate = 0.08;
 ?>
